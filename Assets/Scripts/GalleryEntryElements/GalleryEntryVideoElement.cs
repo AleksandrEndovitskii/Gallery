@@ -200,7 +200,26 @@ public class GalleryEntryVideoElement : GalleryBaseEntryElement, IGalleryElement
     }
     public void Recieve(IResourceLocation resourceLocation)
     {
-        throw new NotImplementedException();
+        Initialise();
+        Clear();
+
+        VideoExists = true;
+        videoReady = false;
+
+        if (resourceLocation.InternalId.Contains("loop") || 
+            resourceLocation.InternalId.Contains("LOOP") || 
+            resourceLocation.InternalId.Contains("Loop"))
+        {
+            vPlayer.isLooping = true;
+        }
+        else
+        {
+            vPlayer.isLooping = loop;
+        }
+
+        vPlayer.source = VideoSource.VideoClip;
+
+        Addressables.LoadAssetAsync<VideoClip>(resourceLocation).Completed += OnAddessableLoadComplete;
     }
 
     public void Clear()

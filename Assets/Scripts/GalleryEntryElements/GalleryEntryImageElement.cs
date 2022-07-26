@@ -136,7 +136,7 @@ public class GalleryEntryImageElement : GalleryBaseEntryElement, IGalleryElement
 		}
 
 		Clear();
-		
+
 		if (string.IsNullOrEmpty(resourceLocation.InternalId))
 		{
 			return;
@@ -144,24 +144,7 @@ public class GalleryEntryImageElement : GalleryBaseEntryElement, IGalleryElement
 
 		if (imageScript != null)
 		{
-			AspectRatioFitter ratio = null;
-			
-			if (GetComponentsInChildren<AspectRatioFitter>(true).Length > 0)
-			{
-				ratio = GetComponentsInChildren<AspectRatioFitter>(true)[0];
-			}
-			
-			bool setAspect = false;
-
 			Addressables.LoadAssetAsync<Texture>(resourceLocation).Completed += OnAddessableLoadComplete;
-			
-			if (ratio != null && setAspect)
-			{
-				float texWidth = imageScript.texture.width;
-				float texHeight = imageScript.texture.height;
-				float aspectRatio = texWidth / texHeight;
-				ratio.aspectRatio = aspectRatio;
-			}
 		}
 	}
 

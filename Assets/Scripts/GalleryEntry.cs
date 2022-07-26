@@ -71,7 +71,19 @@ public class GalleryEntry : MonoBehaviour, IGallery
 
 					for (int i = 0; i < gElements.Count; i++)
 					{
-						gElements[i].Recieve(entry.elements.FirstOrDefault(e => e.id.Equals(gElements[i].Reference)).data);
+						if (entry.ResourceLocation == null)
+						{
+							var firstOrDefault = entry.elements.FirstOrDefault(e => e.id.Equals(gElements[i].Reference));
+							if (firstOrDefault == null)
+							{
+								continue;
+							}
+							gElements[i].Recieve(firstOrDefault.data);
+						}
+						else
+						{
+							gElements[i].Recieve(entry.ResourceLocation);
+						}
 					}
 				}
 			}

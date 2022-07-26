@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -208,7 +208,9 @@ public class GalleryAppender : MonoBehaviour
 
 	private IEnumerator AsyncFindResources(GEntryGroup eGroup)
 	{
-		List<string> keys = assetGroupLabels.ToList();
+		var keys = assetGroupLabels.ToList();
+		var key = Path.GetDirectoryName(runtimeFolder);
+		keys.Add(key);
 
 		AsyncOperationHandle<IList<IResourceLocation>> handle = Addressables.LoadResourceLocationsAsync(keys, Addressables.MergeMode.Union);
 

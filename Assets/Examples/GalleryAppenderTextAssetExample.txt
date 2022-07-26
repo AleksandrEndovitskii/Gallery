@@ -1,0 +1,29 @@
+<xml>
+<Entry>
+	<ID>Green</ID>
+	<Elements>
+		<Element>
+			<Name>image</Name>
+			<Data>Green.png</Data>
+		</Element>
+	</Elements>
+</Entry>
+<Entry>
+	<ID>Blue</ID>
+	<Elements>
+		<Element>
+			<Name>image</Name>
+			<Data>Blue.png</Data>
+		</Element>
+	</Elements>
+</Entry>
+<Entry>
+	<ID>Magenta</ID>
+	<Elements>
+		<Element>
+			<Name>image</Name>
+			<Data>Magenta.png</Data>
+		</Element>
+	</Elements>
+</Entry>
+</xml>

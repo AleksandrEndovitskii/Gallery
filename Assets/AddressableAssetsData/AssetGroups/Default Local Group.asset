@@ -22,6 +22,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Images
+  - m_GUID: 55a9fadade69ac24eb3dadde17acff25
+    m_Address: Videos
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Videos
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: eb2720b08bcc65445a82bd55fca54387, type: 2}
   m_SchemaSet:

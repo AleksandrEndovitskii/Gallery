@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using System;
+using UnityEngine.ResourceManagement.ResourceLocations;
 
 namespace Grain.Gallery
 {
@@ -14,7 +15,7 @@ namespace Grain.Gallery
 	{
 		string ID { get; }
 
-		void Append(string data);
+		void Append(GEntry gEntry);
 
 		void Publish(int control = -1); 
 
@@ -43,6 +44,7 @@ namespace Grain.Gallery
 		string Reference { get; }
 
 		void Recieve (string data);
+		void Recieve (IResourceLocation resourceLocation);
 
 		void Clear();
 
@@ -128,6 +130,7 @@ namespace Grain.Gallery
 	{
 		public string id;
 		public List<GEntryElement> elements;
+		public IResourceLocation ResourceLocation { get; set; }
 	}
 
 	[System.Serializable]

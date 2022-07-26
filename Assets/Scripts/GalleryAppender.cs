@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -202,7 +202,7 @@ public class GalleryAppender : MonoBehaviour
 
 		if(append != null)
 		{
-			append.Append(JsonUtility.ToJson(eGroup));
+			append.Append(eGroup);
         }
 	}
 
@@ -225,6 +225,7 @@ public class GalleryAppender : MonoBehaviour
 				GEntry ge = new GEntry();
 				ge.id = fileWithoutExtension;
 				ge.elements = new List<GEntryElement>();
+				ge.ResourceLocation = handle.Result[i];
 
 				if (IsVideo(extension))
 				{
@@ -243,7 +244,7 @@ public class GalleryAppender : MonoBehaviour
 
 			if (append != null)
 			{
-				append.Append(JsonUtility.ToJson(eGroup));
+				append.Append(eGroup);
 			}
 		}
 

@@ -392,18 +392,16 @@ public class Gallery : MonoBehaviour, IGallery, IPointerUpHandler, IPointerDownH
 		}
 	}
 
-	public void Append(string data)
+	public void Append(GEntryGroup eGroup)
 	{
-		if (string.IsNullOrEmpty(data))
+		if (eGroup == null)
 		{
 			return;
 		}
 		
 		Clear();
 
-		rawSource = data;
-
-		GEntryGroup eGroup = JsonUtility.FromJson<GEntryGroup> (rawSource);
+		rawSource = JsonUtility.ToJson(eGroup);
 
 		if (eGroup != null) 
 		{
@@ -422,7 +420,7 @@ public class Gallery : MonoBehaviour, IGallery, IPointerUpHandler, IPointerDownH
 
 		if (indicationController != null)
 		{
-			indicationController.Append (entries.Count.ToString ());
+			indicationController.Append(entries.Count);
 		}
 
 		freeze = (entries.Count > 1) ? false : true;
@@ -432,6 +430,10 @@ public class Gallery : MonoBehaviour, IGallery, IPointerUpHandler, IPointerDownH
 		if (publishOnAppend) Publish();
 
 		Resources.UnloadUnusedAssets();
+	}
+	public void Append(GEntry gEntry)
+	{
+		throw new System.NotImplementedException();
 	}
 
 	public void Publish(int control = -1)
@@ -454,21 +456,21 @@ public class Gallery : MonoBehaviour, IGallery, IPointerUpHandler, IPointerDownH
 			if (control <= 0) 
 			{
 				n = ((attributes.Index - 1) < 0) ? entries.Count - 1 : attributes.Index - 1;
-				
-				e.Append (JsonUtility.ToJson (entries [n]));
+
+				e.Append(entries[n]);
 
 				e.Publish ();
 			} 
 			else 
 			{
-				if (belowCache.Equals ("B") && belowState.Equals ("A")) 
+				if (belowCache.Equals ("B") && belowState.Equals ("A"))
 				{
-					e.Append (JsonUtility.ToJson (entries [attributes.Next]));
+					e.Append(entries[attributes.Next]);
 
 					e.Publish ();
-				} else if (belowCache.Equals ("A") && belowState.Equals ("B")) 
+				} else if (belowCache.Equals ("A") && belowState.Equals ("B"))
 				{
-					e.Append (JsonUtility.ToJson (entries [attributes.Previous]));
+					e.Append(entries[attributes.Previous]);
 
 					e.Publish ();
 				} 
@@ -481,21 +483,21 @@ public class Gallery : MonoBehaviour, IGallery, IPointerUpHandler, IPointerDownH
 
 			if (control <= 0) 
 			{
-				e.Append (JsonUtility.ToJson (entries [attributes.Index]));
+				e.Append(entries[attributes.Index]);
 
 				e.Publish ();
 			} 
 			else 
 			{
-				if (centerCache.Equals ("B") && centerState.Equals ("A")) 
+				if (centerCache.Equals ("B") && centerState.Equals ("A"))
 				{
-					e.Append (JsonUtility.ToJson (entries [attributes.Next]));
+					e.Append(entries[attributes.Next]);
 
 					e.Publish();
 				} 
-				else if (centerCache.Equals ("A") && centerState.Equals ("B")) 
+				else if (centerCache.Equals ("A") && centerState.Equals ("B"))
 				{
-					e.Append (JsonUtility.ToJson (entries [attributes.Previous]));
+					e.Append(entries[attributes.Previous]);
 
 					e.Publish();
 				}
@@ -509,21 +511,21 @@ public class Gallery : MonoBehaviour, IGallery, IPointerUpHandler, IPointerDownH
 			if (control <= 0) 
 			{
 				n = ((attributes.Index + 1) >= entries.Count) ? 0 : attributes.Index + 1;
-				e.Append (JsonUtility.ToJson (entries [n]));
+				e.Append(entries[n]);
 
 				e.Publish ();
 			} 
 			else 
 			{
-				if (aboveCache.Equals ("B") && aboveState.Equals ("A")) 
+				if (aboveCache.Equals ("B") && aboveState.Equals ("A"))
 				{
-					e.Append (JsonUtility.ToJson (entries [attributes.Next]));
+					e.Append(entries[attributes.Next]);
 
 					e.Publish();
 				} 
-				else if (aboveCache.Equals ("A") && aboveState.Equals ("B")) 
+				else if (aboveCache.Equals ("A") && aboveState.Equals ("B"))
 				{
-					e.Append (JsonUtility.ToJson (entries [attributes.Previous]));
+					e.Append(entries[attributes.Previous]);
 
 					e.Publish();
 				}

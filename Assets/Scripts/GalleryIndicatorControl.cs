@@ -39,17 +39,9 @@ public class GalleryIndicatorControl : MonoBehaviour, IGallery
 		Clear();
 	}
 
-	public void Append(string data)
+	public void Append(int n)
 	{
-		if (string.IsNullOrEmpty(data))
-			return;
-
 		if (indicatorPrefab == null || indicatorPrefab.GetComponent<GalleryIndicator> () == null)
-			return;
-
-        int n;
-
-		if (!int.TryParse(data, out n))
 			return;
 
 		if (n > 1) 
@@ -64,6 +56,10 @@ public class GalleryIndicatorControl : MonoBehaviour, IGallery
 				indicators.Add (go.GetComponent<GalleryIndicator> ());
 			}
 		}
+	}
+	public void Append(GEntry gEntry)
+	{
+		throw new NotImplementedException();
 	}
 
 	public void Publish(int control = -1)

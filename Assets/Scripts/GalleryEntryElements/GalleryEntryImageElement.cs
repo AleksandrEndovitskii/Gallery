@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 using Grain.Gallery;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceLocations;
 
 [RequireComponent(typeof(RawImage))]
 public class GalleryEntryImageElement : GalleryBaseEntryElement, IGalleryElement
@@ -117,6 +118,42 @@ public class GalleryEntryImageElement : GalleryBaseEntryElement, IGalleryElement
 			{
                 StartCoroutine(WebRequest(data));
 			}
+			
+			if (ratio != null && setAspect)
+			{
+				float texWidth = imageScript.texture.width;
+				float texHeight = imageScript.texture.height;
+				float aspectRatio = texWidth / texHeight;
+				ratio.aspectRatio = aspectRatio;
+			}
+		}
+	}
+	public void Recieve (IResourceLocation resourceLocation)
+	{
+		if (imageScript == null)
+		{
+			imageScript = GetComponent<RawImage> ();
+		}
+
+		Clear();
+		
+		if (string.IsNullOrEmpty(resourceLocation.InternalId))
+		{
+			return;
+		}
+
+		if (imageScript != null)
+		{
+			AspectRatioFitter ratio = null;
+			
+			if (GetComponentsInChildren<AspectRatioFitter>(true).Length > 0)
+			{
+				ratio = GetComponentsInChildren<AspectRatioFitter>(true)[0];
+			}
+			
+			bool setAspect = false;
+
+			Addressables.LoadAssetAsync<Texture>(resourceLocation).Completed += OnAddessableLoadComplete;
 			
 			if (ratio != null && setAspect)
 			{

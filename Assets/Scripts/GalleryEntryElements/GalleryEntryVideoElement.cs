@@ -8,6 +8,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceLocations;
 
 [RequireComponent(typeof(VideoPlayer))]
 [RequireComponent(typeof(RawImage))]
@@ -196,6 +197,10 @@ public class GalleryEntryVideoElement : GalleryBaseEntryElement, IGalleryElement
                 }
             }
         }
+    }
+    public void Recieve(IResourceLocation resourceLocation)
+    {
+        throw new NotImplementedException();
     }
 
     public void Clear()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Grain.Gallery;
+using UnityEngine.ResourceManagement.ResourceLocations;
 
 public class GalleryEntry : MonoBehaviour, IGallery
 {
@@ -91,26 +92,30 @@ public class GalleryEntry : MonoBehaviour, IGallery
 		}
     }
 
-    public void Append(string data)
-	{
-		if (string.IsNullOrEmpty(data))
-			return;
+    public void Append(GEntry entry)
+    {
+	    if (entry == null)
+		    return;
 
-		entry = JsonUtility.FromJson<GEntry>(data);
+	    this.entry = entry;
 
-		if(!enableCulling)
-        {
-			publish = (cacheID.Equals(ID)) ? false : true;
-		}
-		else
-        {
-			publish = true;
-        }
-			
-		cacheID = ID;
-	}
+	    if(!enableCulling)
+	    {
+		    publish = (cacheID.Equals(ID)) ? false : true;
+	    }
+	    else
+	    {
+		    publish = true;
+	    }
 
-	public void Publish(int control = -1)
+	    cacheID = ID;
+    }
+    public void Append(GEntryGroup eGroup)
+    {
+	    throw new System.NotImplementedException();
+    }
+
+    public void Publish(int control = -1)
 	{
 		if (!publish)
 			return;
@@ -121,7 +126,19 @@ public class GalleryEntry : MonoBehaviour, IGallery
 
 			for (int i = 0; i < gElements.Count; i++)
 			{
-				gElements[i].Recieve(entry.elements.FirstOrDefault(e => e.id.Equals(gElements[i].Reference)).data);
+				if (entry.ResourceLocation == null)
+				{
+					var firstOrDefault = entry.elements.FirstOrDefault(e => e.id.Equals(gElements[i].Reference));
+					if (firstOrDefault == null)
+					{
+						continue;
+					}
+					gElements[i].Recieve(firstOrDefault.data);
+				}
+				else
+				{
+					gElements[i].Recieve(entry.ResourceLocation);
+				}
 			}
 		}
 	}
